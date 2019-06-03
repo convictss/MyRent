@@ -1,6 +1,6 @@
 # MyRent
 
-## 基于SpringBoot2，采用ssm架构，爬虫框架为WebMagic
+## 基于SpringBoot2，采用ssm(SpringMVC、Spring、MyBatis)架构，爬虫框架为WebMagic
  * JDK8
  * MySQL5.1
  
