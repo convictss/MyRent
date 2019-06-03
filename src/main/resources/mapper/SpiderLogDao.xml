@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.convict.dao.SpiderLogDao">
+
+    <!-- 删除模块 -->
+    <delete id="deleteBatch">
+        DELETE FROM spider_log WHERE data_source = #{dataSource} AND uuid IN
+        <foreach collection="uuids" item="uuid" open="(" close=")" separator=",">
+            #{uuid}
+        </foreach>
+    </delete>
+
+
+    <!-- 查询模块 -->
+    <select id="selectPageLog" resultType="com.convict.po.SpiderLog">
+        SELECT * FROM spider_log WHERE data_source = #{dataSource}
+        ORDER BY end_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectLogByKey" resultType="com.convict.po.SpiderLog">
+        SELECT * FROM spider_log sl
+        <where>
+            <if test="dataSource != null and dataSource != ''">data_source = #{dataSource}</if>
+            <if test="s.uuid != null and s.uuid != ''">AND sl.uuid LIKE CONCAT('%', #{s.uuid}, '%')</if>
+            <!-- 时间、整型需要不可以判断''空字符串 -->
+            <if test="s.startTime != null">AND sl.start_time BETWEEN #{s.startTime} AND #{s.endTime}</if>
+            <if test="s.spiderStatus != null">AND sl.spider_status = #{s.spiderStatus}</if>
+        </where>
+    </select>
+
+
+</mapper>

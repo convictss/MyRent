@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.convict.dao.AdminDao">
+
+    <!-- 保存模块 -->
+
+    <!-- 删除模块 -->
+
+    <!-- 修改模块 -->
+    <update id="updateAdminMess">
+        update admin
+            <set>
+                <if test="nickname != null">
+                    nickname = #{nickname},
+                </if>
+                <if test="userPhoto != null">
+                    user_photo = #{userPhoto}
+                </if>
+            </set>
+        where account = #{account}
+    </update>
+
+    <!-- 查询模块 -->
+
+</mapper>

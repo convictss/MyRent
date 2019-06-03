@@ -1,0 +1,119 @@
+<!--
+    Created by Convict
+    2019/3/4 16:19
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <title>Convict广州租房信息聚合平台</title>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/themeBranch.css}"/>
+    <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/theme.js}"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            /*<![CDATA[*/
+
+            var ctxPath = /*[[@{/}]]*/ '';
+            var errorTip = /*[[${session.errorTip}]]*/ '';
+
+            /*]]>*/
+
+            // 增加提示
+            $("#topTip").html(errorTip);
+
+            // 删除session中的提示信息
+            removeSessionByKey("errorTip");
+
+            // 回车登录
+            $(document).keydown(function (event) {
+                if (event.keyCode === 13) {
+                    $("#loginBtn").click();
+                }
+            });
+
+            // 自动聚焦用户名输入框
+            $("#account").focus();
+
+            $("#captcha").click(function () {
+                var src = ctxPath + "show/captcha?time=" + new Date();
+                $(this).attr("src", src);
+            });
+
+            $("#loginBtn").click(function () {
+                $("#topTip").html("登录验证，请稍等...");
+                $(this).parents("form").submit();
+            });
+
+            function removeSessionByKey(key) {
+                var url = ctxPath + "manage/removeSessionByKey";
+                var params = {
+                    "key": key,
+                    "time": new Date()
+                }
+                $.get(url, params);
+            }
+
+        });
+
+    </script>
+</head>
+
+<body>
+<div class="bg"></div>
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <br><br><br><br><br>
+            <div class="media media-y margin-big-bottom">
+                <span id="topTip" style="font-size: 35px;vertical-align: bottom;color: red;"></span>
+      </div>
+
+      <form th:action="@{/manage/login}" method="post" name="loginForm">
+          <div class="panel loginbox">
+              <div class="text-center margin-big padding-big-top"><h1>Convict广州租房聚合平台</h1></div>
+              <div class="panel-body">
+
+                  <div class="form-group">
+                      <div class="field field-icon-right">
+                          <input type="text" class="input input-big" id="account" name="account"
+                                 placeholder="登录账号" data-validate="required:请填写账号"/>
+                          <span class="icon icon-user"></span>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <div class="field field-icon-right">
+                          <input type="password" class="input input-big" name="password"
+                                 placeholder="登录密码" data-validate="required:请填写密码"/>
+                          <span class="icon icon-key"></span>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <div class="field">
+                          <input type="text" class="input input-big" name="userCaptcha" placeholder="填写右侧的验证码"
+                                 data-validate="required:请填写右侧的验证码"/>
+                          <img th:src="@{/show/captcha}" title="看不清楚，点击刷新" width="100"
+                               height="32" class="passcode"
+                               style="height:43px;cursor:pointer;" id="captcha">
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <input type="button" class="button button-block bg-main text-big input-big" id="loginBtn"
+                             value="登录"/>
+                  </div>
+              </div>
+
+          </div>
+      </form>
+
+  </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!--
+    Created by Convict
+    2019/3/5 17:56
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="panel admin-panel" th:fragment="baseDiv">
+    <div class="padding border-bottom">
+        <strong id="pageHeadTip">[显示页面]</strong>&nbsp;&nbsp;
+        <select id="queryType" style="height: 30px; border-color:#0ae;">
+            <option value="id">ID</option>
+            <option value="title">标题</option>
+            <option value="region">区域</option>
+            <option value="floor">楼层</option>
+            <option value="contact">联系人</option>
+            <option value="publishDate">发布日期</option>
+        </select>
+        <input type="text" placeholder="搜索关键字" id="queryKey" style="width:150px; height:30px;"/>
+        <a class="button border-green icon-search" href="javascript:void(0);" id="queryBtn" onclick="queryRentsByKey()"> 查找</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a class="button border-red icon-trash-o" href="javascript:void(0);" onclick="removeBatch()"> 删除选中</a>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <a class="button border-black icon-trash-o" href="javascript:void(0);" onclick="removeAll()"> 清空全部</a>
+        <!--<a class="button border-yellow icon-plus-square-o" href="javascript:void(0)"> 手动添加</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;-->
+    </div>
+    <table class="table table-hover text-center" id="contentTable">
+        <tr id="fix-head">
+            <th width="7%"><input type="checkbox" id="selectAll"/>序号</th>
+            <th width="8%">ID</th>
+            <th width="20%">标题</th>
+            <th>房型</th>
+            <th>区域</th>
+            <th>
+                <button id="priceBtn" style="border: none; background: none;">月租</button>
+                <input type="hidden" value="none"/>
+            </th>
+            <th>联系人</th>
+            <th width="10%">楼层</th>
+            <th width="10%">发布日期</th>
+            <th width="20%">操作</th>
+        </tr>
+
+        <tr id="fix-bottom">
+            <td colspan="10">
+                <div class="pagelist">
+                    <span style="float: left;border: 0">
+                        共<span style="border: 0;padding: 0 0;" id="rentsCountSpan"></span>条&nbsp;&nbsp;
+                        共<span style="border: 0;padding: 0 0;" id="pageCountSpan"></span>页
+                    </span>
+                    <!--发布时改为 hidden -->
+                    <!--<input type="hidden" id="rentsCountVal"/>-->
+                    <!--<input type="hidden" id="pageCountVal"/>-->
+                    <!--<input type="hidden" id="pageNumVal"/>-->
+
+                    <a id="homePage" href="javascript:void(0);" onclick="changeFixPage(this)">首页</a>
+                    <a id="previousPage" href="javascript:void(0);" onclick="changeFixPage(this)">上一页</a>
+                    <span class="current"></span>
+                    <a id="nextPage" href="javascript:void(0);" onclick="changeFixPage(this)">下一页</a>
+                    <a id="lastPage" href="javascript:void(0);" onclick="changeFixPage(this)">末页</a>
+
+                    <input type="text" size="4" id="myPage" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                    <a id="changePage" href="javascript:void(0);" onclick="changeSpecPage()">跳转</a>&nbsp;&nbsp;
+                    <strong id="pageTip" style="color: red"></strong>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
+</body>
+</html>

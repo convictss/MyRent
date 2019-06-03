@@ -1,0 +1,28 @@
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: utf-8
+  servlet:
+    context-path: /MyRent
+
+spring:
+  mvc:
+    # 默认/** 会被拦截
+    static-path-pattern: /static/**
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_gzzf
+    username: root
+    password: 12345678
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+  thymeleaf:
+    # 开发阶段关闭缓存
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

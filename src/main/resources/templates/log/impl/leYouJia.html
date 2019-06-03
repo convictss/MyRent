@@ -1,0 +1,41 @@
+<!--
+    Created by Convict
+    2019/3/12 8:36
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}">
+    <link rel="stylesheet" th:href="@{/static/css/themeBranch.css}">
+    <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/clipboard.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/logAction.js}"></script>
+</head>
+<script type="text/javascript" th:inline="javascript">
+
+    // 设置数据源
+    var dataSource = "赶集网";
+
+    // 上下文路径使js可以引用 /**/防止编辑器报错
+    /*<![CDATA[*/
+    var pageInf = /*[[${session.leYouJiaLogPageInf}]]*/ '';
+    var ctxPath = /*[[@{/}]]*/ '';
+    /*]]>*/
+
+    $(function () {
+        if (pageInf == null) {
+            // 首次打开此页面
+            getLogs(1, querySize);
+        } else {
+            $("#contentTable tr").siblings().not("tr[id^='fix']").empty();
+            showRowData(pageInf);
+        }
+    });
+
+</script>
+<body>
+<div th:replace="log/base::baseDiv"></div>
+</body>
+</html>

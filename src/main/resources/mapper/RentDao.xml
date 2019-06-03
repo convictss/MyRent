@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.convict.dao.RentDao">
+
+    <!-- 保存模块 -->
+    <insert id="insertImages">
+        INSERT ${dto.tableName} (image, rent_id) VALUES
+        <foreach collection="dto.images" item="img" separator=",">
+            (#{img}, #{dto.id})
+        </foreach>
+    </insert>
+
+    <!-- 删除模块 -->
+    <delete id="deleteBatch">
+        DELETE FROM ${tableName} WHERE id in
+        <foreach collection="ids" item="itemId" open="(" close=")" separator=",">
+            #{itemId}
+        </foreach>
+    </delete>
+
+    <!-- 修改模块 -->
+
+    <!-- 查询模块 -->
+    <resultMap id="rentMapIncImg" type="com.convict.po.Rent">
+        <id property="id" column="id"/>
+        <result property="link" column="link"/>
+        <result property="title" column="title"/>
+        <result property="region" column="region"/>
+        <result property="community" column="community"/>
+        <result property="address" column="address"/>
+        <result property="area" column="area"/>
+        <result property="houseType" column="house_type"/>
+        <result property="floor" column="floor"/>
+        <result property="price" column="price"/>
+        <result property="depositType" column="deposit_type"/>
+        <result property="contact" column="contact"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="trafficRoute" column="traffic_route"/>
+        <result property="publishDate" column="publish_date"/>
+        <collection property="images" ofType="string">
+            <result column="image"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectPageRentIncImages" resultMap="rentMapIncImg">
+        SELECT t.*,ti.image FROM (
+              SELECT * from ${tableName} LIMIT #{offset}, #{pageSize}
+        ) t LEFT JOIN ${tableName}_image ti ON t.id = ti.rent_id
+    </select>
+
+    <select id="selectRentIncImagesById" resultMap="rentMapIncImg">
+        SELECT * FROM ${tableName} t LEFT JOIN ${tableName}_image ti ON t.id = ti.rent_id WHERE t.id = #{id}
+    </select>
+
+    <select id="selectRentExcImagesById" resultMap="rentMapIncImg">
+        SELECT * FROM ${tableName} t  WHERE t.id = #{id}
+    </select>
+
+    <select id="selectRentExcImagesByKey" resultType="com.convict.po.Rent">
+        SELECT * FROM ${tableName} t
+        <where>
+            <if test="r.id != null and r.id != ''">t.id LIKE CONCAT('%', #{r.id}, '%')</if>
+            <if test="r.title != null and r.title != ''">AND t.title LIKE CONCAT('%', #{r.title}, '%')</if>
+            <if test="r.region != null and r.region != ''">AND t.region LIKE CONCAT('%', #{r.region}, '%')</if>
+            <if test="r.floor != null and r.floor != ''">AND t.floor LIKE CONCAT('%', #{r.floor}, '%')</if>
+            <if test="r.contact != null and r.contact != ''">AND t.contact LIKE CONCAT('%', #{r.contact}, '%')</if>
+            <!-- 时间、整型需要不可以判断''空字符串 -->
+            <if test="r.publishDate != null">AND t.publish_date = #{r.publishDate}</if>
+        </where>
+    </select>
+
+
+
+</mapper>

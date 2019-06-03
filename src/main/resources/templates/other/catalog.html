@@ -1,0 +1,154 @@
+<!--
+    Created by Convict
+    2019/3/5 18:02
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}">
+    <link rel="stylesheet" th:href="@{/static/css/themeBranch.css}">
+    <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/projectIndexAction.js}"></script>
+</head>
+<script type="text/javascript" th:inline="javascript">
+
+    // 上下文路径使js可以引用
+    /*<![CDATA[*/
+    var ctxPath = /*[[@{/}]]*/ '';
+    var curAdmin = /*[[${session.curAdmin}]]*/ '';
+    /*]]>*/
+
+    $(function () {
+
+    })
+</script>
+<body>
+<div class="header bg-main">
+    <div class="logo margin-big-left fadein-top">
+        <h1>
+            <img th:src="@{/static/image/fix/theme/{userPhoto}(userPhoto=${session.curAdmin.userPhoto})}"
+                 class="radius-circle rotate-hover" height="50"/>
+            <span>Convict-广州租房信息聚合平台</span>
+        </h1>
+    </div>
+    <div class="head-l" style="float: right">
+        <span style="color: #ffffff;font-size: 20px;vertical-align: middle;">当前用户:</span>
+        <span th:text="${session.curAdmin.nickname}"
+              style="color: #ff0a00;font-size: 20px;font-weight: bolder;vertical-align: middle;"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="javascript:void(0)" class="button button-little bg-blue icon-wrench" onclick="removeSessionByDataSource()">
+            清除缓存</a> &nbsp;&nbsp;
+        <a href="javascript:void(0)" class="button button-little bg-red" onclick="logout()"><span
+                class="icon-power-off"></span> 退出登录</a>&nbsp;&nbsp;
+    </div>
+</div>
+<div class="leftnav">
+    <div class="leftnav-title">
+        <strong><span class="icon-list"></span>导航页</strong>
+    </div>
+    <h2>
+        <span class="icon-database"></span>租房信息
+    </h2>
+    <ul style="display: none;"><!--可以为block-->
+        <li>
+            <a th:href="@{/show/rent/impl/anJuKe}" target="right"><span class="icon-caret-right"></span>安居客</a>
+        </li>
+        <li>
+            <a th:href="@{/show/rent/impl/fiveEightTongCheng}" target="right"><span class="icon-caret-right"></span>58同城</a>
+        </li>
+        <li>
+            <a th:href="@{/show/rent/impl/fangTianXia}" target="right"><span class="icon-caret-right"></span>房天下</a>
+        </li>
+        <li>
+            <a th:href="@{/show/rent/impl/leYouJia}" target="right"><span class="icon-caret-right"></span>乐有家</a>
+        </li>
+        <li>
+            <a th:href="@{/show/rent/impl/ganJiWang}" target="right"><span class="icon-caret-right"></span>赶集网</a>
+        </li>
+        <li>
+            <a th:href="@{/show/rent/impl/baiXingWang}" target="right"><span class="icon-caret-right"></span>百姓网</a>
+        </li>
+        <li>
+            <a th:href="@{/show/rent/impl/lianJia}" target="right"><span class="icon-caret-right"></span>链家</a>
+        </li>
+        <!--<li>-->
+            <!--<a th:href="@{/show/rent/impl/qFangWang}" target="right"><span class="icon-caret-right"></span>Q房网</a>-->
+        <!--</li>-->
+    </ul>
+
+    <h2>
+        <span class="icon-bug"></span>爬虫控制
+    </h2>
+    <ul style="display: none;"><!--none,隐藏-->
+        <li>
+            <a th:href="@{/show/spider/control}" target="right"><span class="icon-caret-right"></span>控制器</a>
+        </li>
+    </ul>
+
+    <h2>
+        <span class="icon-book"></span>日志管理
+    </h2>
+    <ul>
+        <li>
+            <a th:href="@{/show/log/impl/anJuKe}" target="right"><span class="icon-caret-right"></span>安居客</a>
+        </li>
+        <li>
+            <a th:href="@{/show/log/impl/fiveEightTongCheng}" target="right"><span class="icon-caret-right"></span>58同城</a>
+        </li>
+        <li>
+            <a th:href="@{/show/log/impl/fangTianXia}" target="right"><span class="icon-caret-right"></span>房天下</a>
+        </li>
+        <li>
+            <a th:href="@{/show/log/impl/leYouJia}" target="right"><span class="icon-caret-right"></span>乐有家</a>
+        </li>
+        <li>
+            <a th:href="@{/show/log/impl/ganJiWang}" target="right"><span class="icon-caret-right"></span>赶集网</a>
+        </li>
+        <li>
+            <a th:href="@{/show/log/impl/baiXingWang}" target="right"><span class="icon-caret-right"></span>百姓网</a>
+        </li>
+        <li>
+            <a th:href="@{/show/log/impl/lianJia}" target="right"><span class="icon-caret-right"></span>链家</a>
+        </li>
+        <li>
+            <!--<a th:href="@{/show/log/impl/qFangWang}" target="right"><span class="icon-caret-right"></span>Q房网</a>-->
+        </li>
+    </ul>
+
+    <h2>
+        <span class="icon-gear"></span>系统设置
+    </h2>
+    <ul>
+        <li>
+            <a th:href="@{/show/admin/adminMess}" target="right"><span class="icon-caret-right"></span>个人信息</a>
+        </li>
+        <li>
+            <a th:href="@{/show/admin/changePassword}" target="right"><span class="icon-caret-right"></span>设置密码</a>
+        </li>
+    </ul>
+
+    <!--<h2>-->
+        <!--<span class="icon-circle-o-notch"></span>测试显示-->
+    <!--</h2>-->
+    <!--<ul>-->
+        <!--<li>-->
+            <!--<a th:href="@{/show/other/error}" target="right"><span class="icon-caret-right"></span>错误页测试</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+</div>
+
+<ul class="bread">
+    <li>
+        <a th:href="@{/show/other/welcome}" target="right" class="icon-home"> 首页</a>
+    </li>
+    <li>
+        <a target="right" id="a_leader_txt">首页</a>
+    </li>
+</ul>
+<div class="admin">
+    <iframe th:src="@{/show/other/welcome}" scrolling="auto" rameborder="0" name="right"
+            width="100%" height="100%"></iframe>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+.welcome{
+	font-size: 50px;
+ 	line-height: 1.1;
+ 	text-align: center;
+	--interval: 1s;
+ 	display: block;
+  	text-shadow: 
+	0 0 10px var(--color1),
+    0 0 20px var(--color2),
+    0 0 40px var(--color3),
+    0 0 80px var(--color4);
+  	will-change: filter, color;
+ 	 filter: saturate(60%);
+ 	 animation: flicker steps(100) var(--interval) 1s infinite;
+  	color: yellow;
+  	--color1: goldenrod;
+  	--color2: orangered;
+  	--color3: mediumblue;
+  	--color4: purple;
+  	font-family: Gruppo;
+}

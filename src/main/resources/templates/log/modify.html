@@ -1,0 +1,124 @@
+<!--
+    Created by Convict
+    2019/3/8 17:33
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}">
+    <link rel="stylesheet" th:href="@{/static/css/themeBranch.css}">
+    <link rel="stylesheet" th:href="@{/static/css/pictureViewer.css}">
+    <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/jquery.mousewheel.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/theme.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/pictureViewer.js}"></script>
+</head>
+<script type="text/javascript" th:inline="javascript">
+
+    $(function () {
+
+    });
+</script>
+
+<body>
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>查看 / 修改</strong></div>
+    <div class="body-content">
+        <form method="post" class="form-x" th:action="@{/manage/modifyOneLog}" th:object="${session.modifyLog}">
+            <div class="form-group">
+                <div class="label"><label>UUID：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="uuid" th:value="*{uuid}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>爬虫名：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="spiderName" style="display: flex"
+                           th:value="*{spiderName}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>数据来源：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" id="dataSource" name="dataSource"
+                           th:value="*{dataSource}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>启动时间：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" id="startTime" name="startTime"
+                           th:value="${#dates.format(session.modifyLog.startTime, 'yyyy-MM-dd HH:mm:ss')}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>结束时间：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" id="endTime" name="endTime"
+                           th:value="${#dates.format(session.modifyLog.endTime, 'yyyy-MM-dd HH:mm:ss')}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>爬取时间(秒)：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="crawlSecond"
+                           th:value="*{crawlSecond}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>爬取页数：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="pageCount"
+                           th:value="*{pageCount}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>爬取状态详情：</label></div>
+                <div class="field">
+                    <textarea class="input w50" name="spiderStatusMessage"
+                              th:text="*{spiderStatusMessage}" style="height: 400px" readonly>
+                    </textarea>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>备注：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="remark" th:value="*{remark}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label></label></div>
+                <div class="field">
+                    <button class="button bg-blue icon-check-square-o" type="submit"> 提交</button>
+                    <button class="button bg-yellow icon-check-square-o" type="button"
+                            onclick="location.href='javascript:window.history.back(-1)'"> 返回
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

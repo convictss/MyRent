@@ -1,0 +1,60 @@
+<!--
+    Created by Convict
+    2019/3/5 17:55
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="panel admin-panel" th:fragment="baseDiv">
+    <div class="padding border-bottom">
+        <strong id="pageHeadTip">[显示页面]</strong>&nbsp;&nbsp;
+        <select id="queryType" style="height: 30px; border-color:#0ae;">
+            <option value="uuid">UUID</option>
+            <option value="startTime">爬取日期</option>
+            <option value="spiderStatus">爬取状态</option>
+        </select>
+        <input type="text" placeholder="请输入UUID（部分|全部）" id="queryKey" style="width:150px; height:30px;" />
+        <a class="button border-green icon-search" href="javascript:void(0);" id="queryBtn" onclick="queryLogByKey()"> 查找</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a class="button border-red icon-trash-o" href="javascript:void(0);" onclick="removeBatch()"> 删除选中</a>
+        <!--<a class="button border-yellow icon-plus-square-o" href="javascript:void(0)"> 手动添加</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;-->
+    </div>
+    <table class="table table-hover text-center" id="contentTable">
+        <tr id="fix-head">
+            <th width="9%"><input type="checkbox" id="selectAll"/>序号</th>
+            <th width="19%">UUID</th>
+            <th width="6%">&nbsp;</th>
+            <th width="18%">开始时间</th>
+            <th width="18%">结束时间</th>
+            <th width="8%">耗时(秒)</th>
+            <th>操作</th>
+        </tr>
+
+        <tr id="fix-bottom">
+            <td colspan="7">
+                <div class="pagelist">
+                    <!--发布时改为 hidden-->
+                    <input type="hidden" id="rentsCountVal"/>
+                    <input type="hidden" id="pageCountVal"/>
+                    <input type="hidden" id="pageNumVal"/>
+
+                    <a id="homePage" href="javascript:void(0);" onclick="changeFixPage(this)">首页</a>
+                    <a id="previousPage" href="javascript:void(0);" onclick="changeFixPage(this)">上一页</a>
+                    <span class="current"></span>
+                    <a id="nextPage" href="javascript:void(0);" onclick="changeFixPage(this)">下一页</a>
+                    <a id="lastPage" href="javascript:void(0);" onclick="changeFixPage(this)">末页</a>
+
+                    <input type="text" size="4" id="myPage" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                    <a id="changePage" href="javascript:void(0);" onclick="changeSpecPage()">跳转</a>&nbsp;&nbsp;
+                    <strong id="pageTip" style="color: red"></strong>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
+</body>
+</html>

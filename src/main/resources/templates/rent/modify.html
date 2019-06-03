@@ -1,0 +1,241 @@
+<!--
+    Created by Convict
+    2019/3/8 17:33
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}">
+    <link rel="stylesheet" th:href="@{/static/css/themeBranch.css}">
+    <link rel="stylesheet" th:href="@{/static/css/pictureViewer.css}">
+    <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/jquery.mousewheel.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/theme.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/pictureViewer.js}"></script>
+</head>
+<script type="text/javascript" th:inline="javascript">
+    $(function () {
+
+        $(".image-list .cover").click(function () {
+            var images = $(".image-list .cover");
+            var imagesArr = new Array();
+            $.each(images, function (i, image) {
+                imagesArr.push($(image).children('img').attr('src'));
+            });
+            $.pictureViewer({
+                images: imagesArr, //需要查看的图片，数据类型为数组
+                initImageIndex: $(this).index() + 1, //初始查看第几张图片，默认1
+                scrollSwitch: true //是否使用鼠标滚轮切换图片，默认false
+            });
+        });
+
+        // 上下文路径使js可以引用 /**/防止编辑器报错
+        /*<![CDATA[*/
+        var ctxPath = /*[[@{/}]]*/ '';
+        /*]]>*/
+
+        // 增加双击跳转原文链接
+        $("#sourceLink").dblclick(function () {
+            window.open($(this).val());
+        });
+
+        // var imgs = $("#img");
+        // for (var i = 0; i < imgs.length; i++) {
+        //     var img = imgs.get(i);
+        //     console.log(img.src);
+        //
+        // }
+
+    });
+</script>
+
+<body>
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>查看 / 修改</strong></div>
+    <div class="body-content">
+
+        <form method="post" class="form-x" th:action="@{/manage/modifyOneRent}" th:object="${session.modifyRent}"
+              enctype="multipart/form-data">
+            <input type="hidden" name="dataSource" th:value="${session.modifyDataSource}"/>
+            <div class="form-group">
+                <div class="label"><label>ID：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="id"
+                           th:value="*{id}" readonly/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>标题：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="title"
+                           th:value="*{title}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>区域：</label></div>
+                <div class="field">
+                    <select id="region" name="region" class="input w50">
+                        <option value="越秀">越秀</option>
+                        <option value="荔湾">荔湾</option>
+                        <option value="海珠">海珠</option>
+                        <option value="天河">天河</option>
+                        <option value="白云">白云</option>
+                        <option value="黄埔">黄埔</option>
+                        <option value="番禺">番禺</option>
+                        <option value="花都">花都</option>
+                        <option value="萝岗">萝岗</option>
+                        <option value="从化">从化</option>
+                        <option value="增城">增城</option>
+                        <option value="南沙">南沙</option>
+                    </select>
+                    <script type="text/javascript" th:inline="javascript">
+                        var reg = /*[[${session.modifyRent.region}]]*/ '';
+                        $("#region option").each(function (index, item) {
+                            if ($(item).val() === reg) {
+                                $(item).attr("selected", true);
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>具体地址：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="address"
+                           th:value="*{address}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>小区：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="community"
+                           th:value="*{community}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>面积（㎡）：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="area"
+                           th:value="*{area}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>房子类型：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="houseType"
+                           th:value="*{houseType}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>楼层：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="floor"
+                           th:value="*{floor}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>租金（月）：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="price"
+                           th:value="*{price}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>押金类型：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="depositType"
+                           th:value="*{depositType}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>图片：</label></div>
+                <div class="main-content">
+                    <div class="image-list">
+                        <div class="cover" th:each="image,imageStatus:*{images}">
+                            <img th:src="@{/static/image/crawl/}+${image}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>联系人：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="contact"
+                           th:value="*{contact}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>联系电话：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="phoneNumber"
+                           th:value="*{phoneNumber}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>交通线路：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="trafficRoute"
+                           th:value="*{trafficRoute}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>发布日期：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="publishDate"
+                           th:value="*{#dates.format(publishDate, 'yyyy-MM-dd')}"/>
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label>原链接：</label></div>
+                <div class="field">
+                    <input type="text" class="input w50" name="link" id="sourceLink" title="双击跳转"
+                           th:value="*{link}" readonly/>
+                    <!--<span class="input w50">${link}</span>-->
+                    <div class="tips"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label"><label></label></div>
+                <div class="field">
+                    <button class="button bg-blue icon-check-square-o" type="submit"> 提交</button>
+                    <button class="button bg-yellow icon-check-square-o" type="button"
+                            onclick="location.href='javascript:window.history.back(-1)'"> 返回
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

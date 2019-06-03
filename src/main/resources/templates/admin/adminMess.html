@@ -1,0 +1,131 @@
+<!--
+    Created by Convict
+    2019/3/5 17:54
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}">
+    <link rel="stylesheet" th:href="@{/static/css/themeBranch.css}">
+    <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/theme.js}"></script>
+</head>
+<script type="text/javascript" th:inline="javascript">
+
+    // 上下文路径使js可以引用 /**/防止编辑器报错
+    /*<![CDATA[*/
+    var ctxPath = /*[[@{/}]]*/ '';
+    /*]]>*/
+
+    // 是否确定修改用户头像
+    var alreadyModifyUserPhoto = false;
+
+    $(function () {
+        // 回车确定修改
+        $(document).keydown(function (event) {
+            if (event.keyCode === 13) {
+                $("#modifyBtn").click();
+            }
+        });
+
+    });
+
+    // 修改
+    function modify() {
+        if (confirm("确定修改吗?")) {
+            var url = ctxPath + "manage/modifyAdminMess";
+            var params = {
+                "account": $("#account").val(),
+                "nickname": $("#nickname").val(),
+                "alreadyModifyUserPhoto": alreadyModifyUserPhoto
+            };
+            $.getJSON(url, params, function (data) {
+                alert(data.message);
+                if (data.status == 1) {
+                    parent.parent.location.reload();
+                    window.location.href = ctxPath + "show/other/welcome";
+                }
+            });
+        }
+    }
+
+    // 返回
+    function reverse() {
+        alreadyModifyUserPhoto = false;
+        window.history.back(-1);
+    }
+
+    // 预上传，用户头像（精确控制各个参数，所以使用$.ajax）
+    function preUpload() {
+        $.ajax({
+            url: ctxPath + "manage/preUploadUserPhoto",
+            type: 'POST',
+            async: false,
+            cache: false,
+            data: new FormData($('#imgForm')[0]),
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success:function (data) {
+                alreadyModifyUserPhoto = true;
+                var tempNamePrefix = ctxPath + "static/image/fix/theme/";
+                $("#imgForm img").attr("src", tempNamePrefix + data.tempName);
+            },
+            error:function (data) {
+                alreadyModifyUserPhoto = false;
+            }
+        });
+    }
+</script>
+<body>
+<div class="panel admin-panel">
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>修改密码</strong></div>
+    <div class="body-content form-x">
+
+        <div class="form-group">
+            <div class="label">
+                <label>头像：</label>
+            </div>
+            <div class="field">
+                <form id="imgForm" enctype="multipart/form-data">
+                    <img th:src="@{/static/image/fix/theme/}+${session.curAdmin.userPhoto}" style="height: 100px;width: 100px"/>
+                    <input type="button" class="button bg-blue margin-left" id="image1" value="+ 修改" onclick="userPhoto.click()"/>
+                    <input type="file" id="userPhoto" name="userPhoto" style="display:none" onchange="preUpload()"/>
+                </form>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>账号：</label>
+            </div>
+            <div class="field">
+                <input type="text" class="input w50" id="account" th:value="${session.curAdmin.account}" readonly/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label">
+                <label>昵称：</label>
+            </div>
+            <div class="field">
+                <input type="text" class="input w50" id="nickname" th:value="${session.curAdmin.nickname}"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label"><label></label></div>
+            <div class="field">
+                <button class="button bg-blue icon-check-square-o" type="button" id="modifyBtn" onclick="modify()"> 修改
+                </button>
+                <button class="button bg-yellow icon-check-square-o" type="button"
+                        onclick="reverse()"> 返回
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

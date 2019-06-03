@@ -1,0 +1,160 @@
+<!--
+    Created by Convict
+    2019/3/11 21:42
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}">
+    <link rel="stylesheet" th:href="@{/static/css/themeBranch.css}">
+    <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/theme.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/clipboard.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/spiderAction.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        // 上下文路径使js可以引用 /**/防止编辑器报错
+        /*<![CDATA[*/
+        var ctxPath = /*[[@{/}]]*/ '';
+        /*]]>*/
+    </script>
+</head>
+<body>
+<div class="panel admin-panel">
+    <!--<div class="padding border-bottom">-->
+        <!--<h3 style="text-align: center; color: red;font-weight: bolder">爬虫启动时请勿关闭此页面，防止爬虫异步调用时无法手动关闭！</h3>-->
+    <!--</div>-->
+    <table class="table table-hover text-center">
+        <tr>
+            <th>数据源</th>
+            <th>爬虫状态</th>
+            <th width="36%">本次日志ID</th>
+            <th>下载图片</th>
+            <th>线程数(1~5)</th>
+            <th>操作</th>
+        </tr>
+
+        <tr>
+            <td>安居客</td>
+            <td>就绪</td>
+            <td></td>
+            <td><input type="checkbox" name="imgDown"/></td>
+            <td name="threadTD" align="center">
+                <input type="button" value="-" name="subBtn" class="button border-gray" style="padding: 4px 5px 3px 5px"/>
+                <input type="text" value="1" style="size: 10px; text-align: center; width: 30px" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                <input type="button" value="+" name="addBtn" class="button border-gray" style="padding: 3px 3px 3px 3px"/>
+                <strong style="color: red"></strong>
+            </td>
+            <td>
+                <input type="button" value="启动" class="button border-blue"/>
+                <input type="button" value="停止" class="button border-red" disabled="disabled"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>58同城</td>
+            <td>就绪</td>
+            <td></td>
+            <td><input type="checkbox" name="imgDown"/></td>
+            <td name="threadTD" align="center">
+                <input type="button" value="-" name="subBtn" class="button border-gray" style="padding: 4px 5px 3px 5px"/>
+                <input type="text" class="" value="1" style="size: 10px; text-align: center; width: 30px" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                <input type="button" value="+" name="addBtn" class="button border-gray" style="padding: 3px 3px 3px 3px"/>
+                <strong style="color: red"></strong>
+            </td>
+            <td>
+                <input type="button" value="启动" class="button border-blue"/>
+                <input type="button" value="停止" class="button border-red" disabled="disabled"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>房天下</td>
+            <td>就绪</td>
+            <td></td>
+            <td><input type="checkbox" name="imgDown"/></td>
+            <td name="threadTD" align="center">
+                <input type="button" value="-" name="subBtn" class="button border-gray" style="padding: 4px 5px 3px 5px"/>
+                <input type="text" class="" value="1" style="size: 10px; text-align: center; width: 30px" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                <input type="button" value="+" name="addBtn" class="button border-gray" style="padding: 3px 3px 3px 3px"/>
+                <strong style="color: red"></strong>
+            </td>
+            <td>
+                <input type="button" value="启动" class="button border-blue"/>
+                <input type="button" value="停止" class="button border-red" disabled="disabled"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>乐有家</td>
+            <td>就绪</td>
+            <td></td>
+            <td><input type="checkbox" name="imgDown"/></td>
+            <td name="threadTD" align="center">
+                <input type="button" value="-" name="subBtn" class="button border-gray" style="padding: 4px 5px 3px 5px"/>
+                <input type="text" class="" value="1" style="size: 10px; text-align: center; width: 30px" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                <input type="button" value="+" name="addBtn" class="button border-gray" style="padding: 3px 3px 3px 3px"/>
+                <strong style="color: red"></strong>
+            </td>
+            <td>
+                <input type="button" value="启动" class="button border-blue"/>
+                <input type="button" value="停止" class="button border-red" disabled="disabled"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>赶集网</td>
+            <td>就绪</td>
+            <td></td>
+            <td><input type="checkbox" name="imgDown"/></td>
+            <td name="threadTD" align="center">
+                <input type="button" value="-" name="subBtn" class="button border-gray" style="padding: 4px 5px 3px 5px"/>
+                <input type="text" class="" value="1" style="size: 10px; text-align: center; width: 30px" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                <input type="button" value="+" name="addBtn" class="button border-gray" style="padding: 3px 3px 3px 3px"/>
+                <strong style="color: red"></strong>
+            </td>
+            <td>
+                <input type="button" value="启动" class="button border-blue"/>
+                <input type="button" value="停止" class="button border-red" disabled="disabled"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>百姓网</td>
+            <td>就绪</td>
+            <td></td>
+            <td><input type="checkbox" name="imgDown"/></td>
+            <td name="threadTD" align="center">
+                <input type="button" value="-" name="subBtn" class="button border-gray" style="padding: 4px 5px 3px 5px"/>
+                <input type="text" class="" value="1" style="size: 10px; text-align: center; width: 30px" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                <input type="button" value="+" name="addBtn" class="button border-gray" style="padding: 3px 3px 3px 3px"/>
+                <strong style="color: red"></strong>
+            </td>
+            <td>
+                <input type="button" value="启动" class="button border-blue"/>
+                <input type="button" value="停止" class="button border-red" disabled="disabled"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>链家</td>
+            <td>就绪</td>
+            <td></td>
+            <td><input type="checkbox" name="imgDown"/></td>
+            <td name="threadTD" align="center">
+                <input type="button" value="-" name="subBtn" class="button border-gray" style="padding: 4px 5px 3px 5px"/>
+                <input type="text" class="" value="1" style="size: 10px; text-align: center; width: 30px" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+                <input type="button" value="+" name="addBtn" class="button border-gray" style="padding: 3px 3px 3px 3px"/>
+                <strong style="color: red"></strong>
+            </td>
+            <td>
+                <input type="button" value="启动" class="button border-blue"/>
+                <input type="button" value="停止" class="button border-red" disabled="disabled"/>
+            </td>
+        </tr>
+
+    </table>
+</div>
+</body>
+</html>
